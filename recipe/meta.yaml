@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyefd-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pyefd-{{ version }}.tar.gz
   sha256: 628f50f395d41c82db9625834674975584fa8f829fc60cfc127937dec8f22980
   patches:
     - setup.patch
@@ -14,16 +14,16 @@ source:
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
     - pytest-runner
-    - python >=2.7
+    - python {{ python_min }}
   run:
     - numpy >=1.7.0
-    - python >=2.7
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -34,6 +34,7 @@ test:
     - python -c 'from pyefd import elliptic_fourier_descriptors'
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://pypi.org/project/pyefd
